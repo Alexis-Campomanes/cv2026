@@ -1,1 +1,32 @@
-<p>navbar works!</p>
+<div class="progress" aria-hidden="true">
+  <div class="progress__bar" [style.width.%]="progress()"></div>
+</div>
+
+<header class="header">
+  <nav class="nav container">
+    <a href="#top" class="brand">
+      <span class="brand__logo">A</span>
+      <span class="brand__name">Alexis Campomanes</span>
+    </a>
+
+    <div class="spacer"></div>
+
+    <div class="links">
+      @for (link of links; track link.href) {
+        <a [href]="link.href" class="links__item">{{ link.label }}</a>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="theme-toggle"
+      title="Cambiar tema"
+      [attr.aria-label]="isDark() ? 'Activar tema claro' : 'Activar tema oscuro'"
+      (click)="toggleTheme()"
+    >
+      {{ isDark() ? '☀' : '☾' }}
+    </button>
+
+    <a href="#contacto" class="cta">Hablemos</a>
+  </nav>
+</header>
