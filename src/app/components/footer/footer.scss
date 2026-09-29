@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+.footer {
+  border-top: 1px solid var(--c-line);
+  background: var(--c-raise);
+
+  &__inner {
+    padding-top: 26px;
+    padding-bottom: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__copy {
+    font-family: var(--f-mono);
+    font-size: 12.5px;
+    color: var(--c-ink3);
+  }
+
+  &__links {
+    display: flex;
+    gap: 16px;
+
+    a {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+}

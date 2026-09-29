@@ -1,1 +1,358 @@
-<p>home works!</p>
+<!-- Hero -->
+<section id="top" class="hero container">
+  <div class="blob blob--teal" aria-hidden="true"></div>
+  <div class="blob blob--brand" aria-hidden="true"></div>
+  <div class="floating-card" aria-hidden="true" [style.margin-top.px]="parallax()"></div>
+
+  <div class="hero__grid">
+    <div data-reveal class="min0">
+      @if (disponible()) {
+        <div class="badge"><span class="badge__dot"></span>Disponible para proyectos</div>
+      }
+      <h1 class="hero__title">
+        Hola, soy Alexis.<br />Contame tu idea y<br />
+        <span class="gradient-text">la dejo funcionando.</span>
+      </h1>
+      <div class="typer">
+        <span class="typer__prompt">$</span><span>{{ typed() }}</span
+        ><span class="typer__caret"></span>
+      </div>
+      <div class="hero__actions">
+        <a
+          href="#contacto"
+          class="btn btn--primary"
+          (pointermove)="magnet($event)"
+          (pointerleave)="resetTransform($event)"
+        >
+          <span class="btn__shine"></span>Contame tu proyecto
+        </a>
+        <a
+          href="#cv"
+          class="btn btn--ghost"
+          (pointermove)="magnet($event)"
+          (pointerleave)="resetTransform($event)"
+          >Descargar CV</a
+        >
+      </div>
+      <div class="stats">
+        @for (s of stats; track s.label) {
+          <div>
+            <div class="stats__value" [attr.data-count]="s.value" [attr.data-suffix]="s.suffix">
+              {{ s.value }}{{ s.suffix }}
+            </div>
+            <div class="stats__label">{{ s.label }}</div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div data-reveal class="min0">
+      <div class="terminal">
+        <div class="terminal__bar">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+          <span class="terminal__title">alexis&#64;portfolio — zsh</span>
+        </div>
+        <div #termBody class="terminal__body" (click)="focusTerm()">
+          @for (line of lines(); track $index) {
+            <div class="terminal__line" [style.color]="line.color">{{ line.text }}</div>
+          }
+          <div class="terminal__input-row">
+            <span class="terminal__arrow">➜</span>
+            <input
+              #termInput
+              class="terminal__input"
+              aria-label="Comando de la terminal"
+              placeholder="escribí 'ayuda' y enter"
+              spellcheck="false"
+              [value]="cmd()"
+              (input)="cmd.set(termInput.value)"
+              (keydown.enter)="run(cmd())"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="chips">
+        @for (c of quickCmds; track c) {
+          <button type="button" class="chip" (click)="quick(c)">{{ c }}</button>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stack diario -->
+<section data-reveal class="stack-band">
+  <div class="container stack-band__inner">
+    <span class="stack-band__label">Stack diario</span>
+    <div class="marquee">
+      <div class="marquee__track">
+        @for (t of stackLoop; track $index) {
+          <span class="marquee__item">{{ t }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 Proyectos -->
+<section id="proyectos" class="section container">
+  <div data-reveal class="section__head">
+    <span class="eyebrow">01 — Casos de estudio</span>
+    <h2 class="section__title">Trabajo que ya está en producción</h2>
+    <p class="section__lead">
+      Cada proyecto cuenta lo mismo: el problema, la decisión técnica y el resultado medible.
+      Filtrá por tecnología si buscás algo puntual.
+    </p>
+  </div>
+
+  <div data-reveal class="filters">
+    @for (f of filters; track f) {
+      <button
+        type="button"
+        class="filter"
+        [class.filter--active]="filter() === f"
+        (click)="filter.set(f)"
+      >
+        {{ f }}
+      </button>
+    }
+  </div>
+
+  <div class="projects">
+    @for (p of visibleProjects(); track p.num) {
+      <article
+        class="project"
+        (pointermove)="tilt($event)"
+        (pointerleave)="resetTransform($event)"
+      >
+        <div class="project__art" [style.background-image]="p.art">
+          <span class="project__kind">{{ p.kind }}</span>
+          <span class="project__num">{{ p.num }}</span>
+        </div>
+        <div class="project__body">
+          <h3 class="project__name">{{ p.name }}</h3>
+          <p class="project__desc">{{ p.desc }}</p>
+          <div class="metric">
+            <span class="metric__value">{{ p.metric }}</span>
+            <span class="metric__label">{{ p.metricLabel }}</span>
+          </div>
+          <div class="tags">
+            @for (tag of p.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+  <p class="placeholder-note">
+    // Placeholder: reemplazá estos casos por tus proyectos reales (nombre, stack y resultado).
+  </p>
+</section>
+
+<!-- 02 Servicios -->
+<section id="servicios" class="section container">
+  <div data-reveal class="section__head">
+    <span class="eyebrow">02 — Servicios</span>
+    <h2 class="section__title">Tres formas de trabajar juntos</h2>
+    <p class="section__lead">
+      Precios de referencia para que sepas a qué atenerte antes de la primera llamada. Si tu caso
+      no encaja, lo charlamos y armo algo a medida.
+    </p>
+  </div>
+
+  <div class="services">
+    @for (s of services; track s.name) {
+      <div data-reveal class="service" [class.service--featured]="s.featured">
+        @if (s.featured) {
+          <span class="service__badge">Más pedido</span>
+        }
+        <h3 class="service__name">{{ s.name }}</h3>
+        <div class="service__price">
+          <span class="service__amount">{{ mostrarPrecios() ? s.price : s.altPrice }}</span>
+          @if (mostrarPrecios() && s.unit) {
+            <span class="service__unit">{{ s.unit }}</span>
+          }
+        </div>
+        <p class="service__desc">{{ s.desc }}</p>
+        <div class="service__items">
+          @for (it of s.items; track it) {
+            <div class="service__item">
+              <span class="service__check">✓</span><span>{{ it }}</span>
+            </div>
+          }
+        </div>
+        <div class="flex1"></div>
+        <a href="#contacto" class="service__cta">{{ s.cta }}</a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- 03 Trayectoria + 04 Sobre mí -->
+<section id="trayectoria" class="section container">
+  <div class="two-col">
+    <div data-reveal class="min0">
+      <span class="eyebrow">03 — Trayectoria</span>
+      <h2 class="section__title section__title--spaced">Cómo llegué hasta acá</h2>
+      <div class="timeline">
+        @for (e of timeline; track e.when) {
+          <div class="timeline__item">
+            <div class="timeline__rail">
+              <span class="timeline__dot" [style.background]="e.dot"></span>
+              <span class="timeline__line"></span>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__when">{{ e.when }}</div>
+              <div class="timeline__role">{{ e.role }}</div>
+              <div class="timeline__org">{{ e.org }}</div>
+              <p class="timeline__what">{{ e.what }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div id="sobre-mi" data-reveal class="min0">
+      <span class="eyebrow">04 — Sobre mí</span>
+      <h2 class="section__title section__title--spaced">La persona detrás del código</h2>
+      <div class="about">
+        <p>
+          Empecé arreglando la web de un negocio familiar y me quedé: descubrí que lo que más me
+          gusta es ver a alguien usar algo que armé y decir “esto me ahorra el día”.
+        </p>
+        <p>
+          Trabajo de forma directa: pocas reuniones, mucho avance visible. Prefiero mostrarte algo
+          funcionando en la semana 1 antes que un documento de 40 páginas.
+        </p>
+        <p>Fuera de la pantalla: mate, música y desarmar cosas para entender cómo andan.</p>
+      </div>
+      <div class="facts">
+        @for (f of facts; track f.label) {
+          <div class="fact">
+            <div class="fact__label">{{ f.label }}</div>
+            <div class="fact__value">{{ f.value }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Notas -->
+<section id="notas" class="section container">
+  <div data-reveal class="notes-head">
+    <div class="notes-head__text">
+      <span class="eyebrow">05 — Notas técnicas</span>
+      <h2 class="section__title section__title--flush">Lo que aprendo, escrito</h2>
+    </div>
+    <a href="#notas" class="see-all">ver todas <span class="see-all__arrow">→</span></a>
+  </div>
+  <div class="notes">
+    @for (n of notes; track n.title) {
+      <a data-reveal href="#notas" class="note">
+        <div class="note__meta">
+          <span class="note__tag">{{ n.tag }}</span>
+          <span>{{ n.date }}</span>
+          <span>· {{ n.read }}</span>
+        </div>
+        <h3 class="note__title">{{ n.title }}</h3>
+        <p class="note__excerpt">{{ n.excerpt }}</p>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv" data-reveal class="section container">
+  <div class="cv">
+    <div class="cv__text">
+      <h3 class="cv__title">¿Preferís el CV en PDF?</h3>
+      <p class="cv__lead">
+        Una página, sin relleno: stack, experiencia y proyectos con resultado. Actualizado este mes.
+      </p>
+    </div>
+    <div class="cv__actions">
+      <a href="#cv" download class="btn-solid">Descargar CV (PDF)</a>
+      <a href="#contacto" class="btn-outline">Ver en LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section id="contacto" data-reveal class="section section--last container">
+  <div class="contact">
+    <div class="contact__grid">
+      <div class="min0">
+        <h2 class="contact__title">Contame qué querés construir</h2>
+        <p class="contact__lead">
+          Escribime con dos líneas sobre tu idea y te respondo con un plan concreto: alcance,
+          tiempos y precio. Sin compromiso.
+        </p>
+        <div class="contact__links">
+          @for (l of contactLinks; track l.href) {
+            <a
+              class="contact__link"
+              [class.contact__link--mono]="l.mono"
+              [href]="l.href"
+              [attr.target]="l.mono ? null : '_blank'"
+              [attr.rel]="l.mono ? null : 'noopener'"
+              >{{ l.label }}</a
+            >
+          }
+        </div>
+      </div>
+
+      <div class="form">
+        @if (sent()) {
+          <div class="form__done">
+            <div class="form__check">✓</div>
+            <div class="form__done-title">¡Mensaje enviado!</div>
+            <p class="form__done-text">
+              Gracias {{ saludo() }}. Te respondo dentro de las próximas 24 horas.
+            </p>
+          </div>
+        } @else {
+          <div class="form__fields">
+            <label class="field">
+              <span class="field__label">Tu nombre</span>
+              <input
+                #nameInput
+                class="field__input"
+                placeholder="Cómo te llamo"
+                [value]="formName()"
+                (input)="formName.set(nameInput.value)"
+              />
+            </label>
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input
+                #mailInput
+                type="email"
+                class="field__input"
+                placeholder="tu@email.com"
+                [value]="formMail()"
+                (input)="formMail.set(mailInput.value)"
+              />
+            </label>
+            <label class="field">
+              <span class="field__label">¿Qué necesitás?</span>
+              <textarea
+                #msgInput
+                rows="3"
+                class="field__input field__input--area"
+                placeholder="Una app, un rediseño, integrar una API…"
+                [value]="formMsg()"
+                (input)="formMsg.set(msgInput.value)"
+              ></textarea>
+            </label>
+            <button type="button" class="form__submit" (click)="submit()">Enviar mensaje</button>
+            <p class="form__hint">Demo de formulario — no envía datos reales.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
