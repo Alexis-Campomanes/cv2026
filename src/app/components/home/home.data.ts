@@ -208,7 +208,7 @@ export const TIMELINE = [
   {
     when: '2020',
     role: 'Prácticante',
-    org: 'Municipalidad de Comas',
+    org: 'Municipalidad Distrital de Comas',
     what: 'Mantenimiento de sistemas internos y la página web institucional',
     dot: '#CFC9D6',
   },
