@@ -31,13 +31,18 @@ export class ThemeService {
   }
 
   private readSaved(): Theme {
-    if (!this.isBrowser) return 'light';
+    if (!this.isBrowser) return 'dark';
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === 'dark' || saved === 'light') return saved;
     } catch {
       // ignorado
     }
-    return 'light';
+    return this.getSystemPreference();
+  }
+
+  private getSystemPreference(): Theme {
+    if (!this.isBrowser) return 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 }

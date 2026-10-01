@@ -143,13 +143,12 @@
               <span class="tag">{{ tag }}</span>
             }
           </div>
+          <a [href]="p.web" target="_blank" rel="noopener" class="project__link">ver más <span class="project__link-arrow">→</span></a>
         </div>
       </article>
     }
   </div>
-  <p class="placeholder-note">
-    // Placeholder: reemplazá estos casos por tus proyectos reales (nombre, stack y resultado).
-  </p>
+
 </section>
 
 <!-- 02 Servicios -->
@@ -220,14 +219,13 @@
       <h2 class="section__title section__title--spaced">La persona detrás del código</h2>
       <div class="about">
         <p>
-          Empecé arreglando la web de un negocio familiar y me quedé: descubrí que lo que más me
-          gusta es ver a alguien usar algo que armé y decir “esto me ahorra el día”.
+          Empecé viendo a mis familiares desarrollarse profesionalmente en el rubo de la tecnología y me interesé en aprender a programar.
+          Desde entonces, he estado trabajando en proyectos que me apasionan y que me permiten seguir creciendo como desarrollador.
         </p>
         <p>
-          Trabajo de forma directa: pocas reuniones, mucho avance visible. Prefiero mostrarte algo
-          funcionando en la semana 1 antes que un documento de 40 páginas.
+          Trabajo de forma dependiente y freelance, con foco en desarrollo web y aplicaciones web ymóviles. Me gusta aprender nuevas tecnologías y aplicarlas en proyectos reales.
         </p>
-        <p>Fuera de la pantalla: mate, música y desarmar cosas para entender cómo andan.</p>
+        <p>Fuera de la pantalla: futbol, compartir con amistades.</p>
       </div>
       <div class="facts">
         @for (f of facts; track f.label) {
@@ -248,11 +246,11 @@
       <span class="eyebrow">05 — Notas técnicas</span>
       <h2 class="section__title section__title--flush">Lo que aprendo, escrito</h2>
     </div>
-    <a href="#notas" class="see-all">ver todas <span class="see-all__arrow">→</span></a>
+    <a href="#" class="see-all" (click)="$event.preventDefault(); toggleShowAllNotes()">{{ showAllNotes() ? 'ver menos' : 'ver todas' }} <span class="see-all__arrow">{{ showAllNotes() ? '↑' : '→' }}</span></a>
   </div>
   <div class="notes">
-    @for (n of notes; track n.title) {
-      <a data-reveal href="#notas" class="note">
+    @for (n of visibleNotes(); track n.title) {
+      <a href="#notas" class="note">
         <div class="note__meta">
           <span class="note__tag">{{ n.tag }}</span>
           <span>{{ n.date }}</span>
@@ -269,14 +267,14 @@
 <section id="cv" data-reveal class="section container">
   <div class="cv">
     <div class="cv__text">
-      <h3 class="cv__title">¿Preferís el CV en PDF?</h3>
+      <h3 class="cv__title">¿Prefieres el CV en PDF?</h3>
       <p class="cv__lead">
         Una página, sin relleno: stack, experiencia y proyectos con resultado. Actualizado este mes.
       </p>
     </div>
     <div class="cv__actions">
       <a href="#cv" download class="btn-solid">Descargar CV (PDF)</a>
-      <a href="#contacto" class="btn-outline">Ver en LinkedIn</a>
+      <a href="https://www.linkedin.com/in/alexiscampomanes/" target="_blank" rel="noopener" class="btn-outline">Ver en LinkedIn</a>
     </div>
   </div>
 </section>
@@ -348,8 +346,7 @@
                 (input)="formMsg.set(msgInput.value)"
               ></textarea>
             </label>
-            <button type="button" class="form__submit" (click)="submit()">Enviar mensaje</button>
-            <p class="form__hint">Demo de formulario — no envía datos reales.</p>
+            <button type="button" class="form__submit" (click)="submit($event)">Enviar mensaje</button>
           </div>
         }
       </div>

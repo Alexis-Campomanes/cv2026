@@ -10,6 +10,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import emailjs from '@emailjs/browser';
 import {
   COMMANDS,
   CONTACT_LINKS,
@@ -56,6 +57,17 @@ export class Home {
   readonly contactLinks = CONTACT_LINKS;
   readonly quickCmds = ['ayuda', 'stack', 'proyectos', 'contacto'];
 
+  // Notas
+  readonly showAllNotes = signal(false);
+  readonly visibleNotes = computed(() =>
+    this.showAllNotes() ? this.notes : this.notes.slice(0, 3)
+  );
+  toggleShowAllNotes(): void {
+    console.log('Toggle clicked, current value:', this.showAllNotes());
+    this.showAllNotes.update(v => !v);
+    console.log('New value:', this.showAllNotes());
+  }
+
   // Hero
   readonly typed = signal('');
   readonly parallax = signal(0);
@@ -82,8 +94,13 @@ export class Home {
   readonly sent = signal(false);
   readonly saludo = computed(() => this.formName().trim() || 'de nuevo');
 
+  private initialized = false;
+
   constructor() {
+    emailjs.init('f4U_Wr8VnobciVsYl');
     afterNextRender(() => {
+      if (this.initialized) return;
+      this.initialized = true;
       this.setupReveal();
       this.startTyping();
       this.onScroll();
@@ -151,8 +168,31 @@ export class Home {
 
   // ---- Formulario ----
 
-  submit(): void {
-    this.sent.set(true);
+  submit(event?: Event): void {
+    event?.preventDefault();
+
+    const name = this.formName().trim();
+    const mail = this.formMail().trim();
+    const msg = this.formMsg().trim();
+
+    if (!name || !mail || !msg) return;
+
+    emailjs
+      .send('service_7h62m29', 'template_prvjc1d', {
+        user_name: name,
+        user_email: mail,
+        message: msg,
+      })
+      .then(() => {
+        this.sent.set(true);
+        this.formName.set('');
+        this.formMail.set('');
+        this.formMsg.set('');
+      })
+      .catch((error) => {
+        console.error('Error enviando email:', error);
+        alert('Error al enviar el mensaje. Por favor intenta de nuevo.');
+      });
   }
 
   // ---- Animaciones de entrada ----

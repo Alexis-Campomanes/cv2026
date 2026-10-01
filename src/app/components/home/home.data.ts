@@ -12,6 +12,7 @@ export interface Project {
   metricLabel: string;
   tags: string[];
   art: string;
+  web: string;
 }
 
 export interface Service {
@@ -36,43 +37,69 @@ export const TERM_COLORS = {
 export const PROJECTS: Project[] = [
   {
     num: '01',
-    kind: 'SaaS · Producto propio',
-    name: 'Panel de distribuidoras',
-    desc: 'Un CRM liviano para equipos de venta en ruta: pedidos offline, cobranzas y stock en un solo lugar. Diseñé el modelo de datos y lo llevé a producción solo.',
-    metric: '-40%',
-    metricLabel: 'tiempo de cierre de pedido',
-    tags: ['Next.js', 'Node', 'PostgreSQL', 'AWS'],
+    kind: 'Albúm para Bodas · Producto propio',
+    name: 'Albúm de fotos',
+    desc: 'Panel web para que los usuarios suban sus fotos tomadas en el evento y las compartan con sus invitados. Todo en tiempo real, sin necesidad de refrescar la página.',
+    metric: '',
+    metricLabel: 'Almacenamiento en tiempo real de fotos',
+    tags: ['Angular JS.', 'Firebase'],
     art: 'linear-gradient(135deg,#2A1848 0%,#542F87 100%)',
+    web: 'https://bodaalexismireya.web.app/',
   },
   {
     num: '02',
-    kind: 'E-commerce · Cliente',
-    name: 'Tienda con pagos locales',
-    desc: 'Migré una tienda lenta a un stack headless con checkout propio e integración de pasarelas regionales. Todo medido con Lighthouse antes y después.',
-    metric: '2.1s → 0.6s',
-    metricLabel: 'carga percibida (LCP)',
-    tags: ['React', 'TypeScript', 'Stripe', 'Redis'],
+    kind: 'Organizador · Producto propio',
+    name: 'Organizador de Invitados',
+    desc: 'Proporciona uns distribución según el número de mesas y la cantidad de invitador organizandolos de manera equitativa. Permite agregar invitados, asignarles una mesa y generar un PDF con la distribución final.',
+    metric: '',
+    metricLabel: 'Guardar en PDF',
+    tags: ['Angular JS.', 'Firebase'],
     art: 'linear-gradient(135deg,#007F78 0%,#00B8AD 100%)',
+    web: 'https://bodaalexismireya-mesas.web.app/',
   },
   {
     num: '03',
-    kind: 'Interno · Automatización',
-    name: 'Motor de reportes',
-    desc: 'Reemplacé un proceso de planillas manuales por un servicio que consolida datos de tres sistemas y envía el reporte cada mañana.',
-    metric: '12h/sem',
-    metricLabel: 'de trabajo manual eliminado',
-    tags: ['Python', 'Docker', 'PostgreSQL', 'GraphQL'],
+    kind: 'Altas de clientes · Interno',
+    name: 'Monitor de clientes',
+    desc: 'Por medio de base de datos sql mostramos un panel web donde los supervisores revisan la información y dan conformidad, dicha plataforma tiene integración con SAP para la actualización de los datos de los clientes, eliminando trabajo manual y errores de digitación.',
+    metric: '',
+    metricLabel: 'Aprobación con un click',
+    tags: ['Angular JS.', 'Docker', 'SQL', '.NET Core', 'SAP'],
     art: 'linear-gradient(135deg,#3D2166 0%,#00B8AD 100%)',
+    web: '',
   },
   {
     num: '04',
-    kind: 'Mobile · Cliente',
-    name: 'App de turnos',
-    desc: 'App para agendar y recordar turnos con notificaciones push y panel web para el negocio. Una base de código para iOS, Android y web.',
-    metric: '+28%',
-    metricLabel: 'asistencia a los turnos',
-    tags: ['React Native', 'Node', 'MongoDB'],
+    kind: 'Monitor Corporativos',
+    name: 'Moódulos a necesidad del cliente',
+    desc: 'Trabajo con arquitectura de microservicios, donde cada módulo es independiente y se comunica con los demás por medio de API Rest, permitiendo que el cliente pueda tener un control total de su negocio y sus procesos.',
+    metric: '',
+    metricLabel: 'Información en tiempo real',
+    tags: ['Angular JS.', '.NET Core', 'SQL', 'Docker', 'Microservicios'],
     art: 'linear-gradient(135deg,#542F87 0%,#8A5BC5 100%)',
+    web: '',
+  },
+  {
+    num: '05',
+    kind: 'Telegram',
+    name: 'Bot de Telegram - Precio criptomonedas',
+    desc: 'Bot de Telegram que permite a los usuarios consultar el precio de las criptomonedas en tiempo real, utilizando la API de CoinGecko para obtener los datos más recientes. El bot responde a comandos específicos y proporciona información detallada sobre cada criptomoneda.',
+    metric: '',
+    metricLabel: 'Precio rango de 1 hora en tiempo real',
+    tags: ['Python', 'Telegram API', 'CoinGecko API'],
+    art: 'linear-gradient(135deg,#542F87 0%,#8A5BC5 100%)',
+    web: 'https://t.me/denzel2910_Bot',
+  },
+  {
+    num: '06',
+    kind: 'Atomatizador',
+    name: 'Bot de Telegram - Noticias para LinkedIn',
+    desc: 'Bot de Telegram que permite a los usuarios recibir notificaciones sobre las últimas noticias del mundo de la tecnología y el desarrollo profesional.',
+    metric: '',
+    metricLabel: 'Notificaciones en tiempo real',
+    tags: ['N8N', 'Telegram API', 'LinkedIn API'],
+    art: 'linear-gradient(135deg,#542F87 0%,#8A5BC5 100%)',
+    web: 'https://t.me/Lin_kedin_bot',
   },
 ];
 
@@ -93,7 +120,7 @@ export const STACK = [
   'CI/CD',
 ];
 
-export const FILTERS = ['Todos', 'React', 'Node', 'PostgreSQL', 'Python', 'React Native'];
+export const FILTERS = ['Todos', 'Docker', 'Telegram API', 'SQL', 'Python', 'Angular', 'N8N'];
 
 export const STATS = [
   { value: 5, suffix: '+', label: 'años escribiendo código' },
@@ -133,7 +160,7 @@ export const SERVICES: Service[] = [
     items: [
       'Alcance y presupuesto cerrado',
       'Diseño de interfaz incluido',
-      'Backend, base de datos y hosting',
+      'Backend, base de datos y deploy',
       '30 días de garantía post-lanzamiento',
     ],
     cta: 'Pedir propuesta',
@@ -159,69 +186,112 @@ export const SERVICES: Service[] = [
 export const TIMELINE = [
   {
     when: '2024 — hoy',
-    role: 'Desarrollador fullstack independiente',
-    org: 'Clientes propios · Remoto',
-    what: 'Productos de punta a punta para pymes y startups: relevamiento, desarrollo, deploy y acompañamiento.',
+    role: 'Desarrollador Analista Web',
+    org: 'G.W.Yichang & Cia S.A. ',
+    what: 'Integraciones Web y SAP, desarrollo de aplicaciones web y móviles, mantenimiento de sistemas internos.',
     dot: '#00B8AD',
   },
   {
     when: '2022 — 2024',
-    role: 'Fullstack semi-senior',
-    org: 'Empresa de software (placeholder)',
-    what: 'Features de un producto SaaS con miles de usuarios; me tocó ordenar el backend y bajar los tiempos de respuesta.',
+    role: 'Fullstack semi-senior - Freelance',
+    org: 'Empresas y startups de LATAM',
+    what: 'Creación de páginas web para empresas y startups, con foco en performance, accesibilidad y escalabilidad. Desarrollo de aplicaciones web y móviles.',
     dot: '#542F87',
   },
   {
     when: '2021 — 2022',
     role: 'Desarrollador frontend',
-    org: 'Agencia digital (placeholder)',
+    org: 'Agencia digital (Ecommerce y marketing)',
     what: 'Interfaces para clientes de retail y servicios, con foco en performance y accesibilidad.',
     dot: '#8A5BC5',
   },
   {
     when: '2020',
-    role: 'Los primeros proyectos',
-    org: 'Aprendiendo en la práctica',
-    what: 'Sitios y automatizaciones para negocios del barrio. Ahí entendí que el código sirve cuando resuelve algo concreto.',
+    role: 'Prácticante',
+    org: 'Municipalidad de Comas',
+    what: 'Mantenimiento de sistemas internos y la página web institucional',
     dot: '#CFC9D6',
   },
 ];
 
 export const FACTS = [
   { label: 'Base', value: 'Remoto · LATAM' },
-  { label: 'Idiomas', value: 'Español · Inglés técnico' },
+  { label: 'Idiomas', value: 'Español' },
   { label: 'Respondo en', value: '< 24 horas' },
 ];
 
 export const NOTES = [
   {
-    tag: 'Arquitectura',
-    date: 'sep 2026',
-    read: '6 min',
-    title: 'Cuándo NO necesitás microservicios',
-    excerpt:
-      'Un monolito bien ordenado aguanta mucho más de lo que dicen. Cómo decidirlo sin fe ciega.',
+    tag: 'Udemy',
+    date: 'dic 2025',
+    read: '5 horas',
+    title: 'N8N : Crear Agentes de IA y automatización de flujos',
+    excerpt: 'Curso sobre cómo crear agentes de inteligencia artificial y automatizar flujos de trabajo utilizando N8N.',
   },
   {
-    tag: 'Performance',
-    date: 'ago 2026',
-    read: '4 min',
-    title: 'De 2.1s a 0.6s de LCP sin cambiar de framework',
-    excerpt: 'Las cuatro cosas que movieron la aguja de verdad en una tienda real.',
+    tag: 'Udemy',
+    date: 'dic 2025',
+    read: '13 horas',
+    title: 'AWS CERTIFIED CLOUD PRACTITIONER CLF-C02',
+    excerpt: 'Curso de preparación para la certificación AWS Certified Cloud Practitioner, que cubre los fundamentos de la nube y los servicios de AWS.',
   },
   {
-    tag: 'Freelance',
-    date: 'jul 2026',
-    read: '5 min',
-    title: 'Cómo presupuesto un proyecto sin quedar corto',
-    excerpt: 'Mi checklist para estimar alcance, riesgos y el famoso “ya que estamos”.',
+    tag: 'Google Cloud',
+    date: 'oct 2025',
+    read: '3 horas',
+    title: 'DOMINA LA IA CON GEMINI',
+    excerpt: 'Curso sobre cómo dominar la inteligencia artificial utilizando la plataforma Gemini de Google Cloud.',
   },
+  {
+    tag: 'Cisco',
+    date: 'oct 2025',
+    read: '3 horas',
+    title: 'INTRODUCCIPON A LA CIENCIA DE DATOS',
+    excerpt: 'Curso introductorio a la ciencia de datos, que cubre conceptos básicos y técnicas utilizadas en el análisis de datos.',
+  },
+  {
+    tag: 'Cisco',
+    date: 'ago 2025',
+    read: '3 horas',
+    title: 'CONCEPTO DE REDES',
+    excerpt: 'Curso sobre los conceptos fundamentales de redes, incluyendo protocolos, topologías y seguridad de red.',
+  },
+  {
+    tag: 'Cisco',
+    date: 'jul 2025',
+    read: '3 horas',
+    title: 'INTRODUCCIÓN A LA CIBERSEGURIDAD',
+    excerpt: 'Curso sobre los conceptos fundamentales de ciberseguridad, incluyendo amenazas, vulnerabilidades y medidas de protección.',
+  },
+  {
+    tag: 'Udemy',
+    date: 'may 2025',
+    read: '2.5 horas',
+    title: 'INGENIERÍA DE PROMPTS PARA CHATGPT',
+    excerpt:'Curso que adapta nuevos procedimiento al interactuar con la IA para dar mayor eficiencia a las respuesyas.',
+  },
+  {
+    tag: 'Udemy',
+    date: 'feb 2025',
+    read: '3 horas',
+    title: 'ETL DATA TESTING',
+    excerpt: 'Curso sobre cómo extraer, transformar y cargar datos de manera eficiente.',
+  },
+  {
+    tag: 'Platzi',
+    date: 'dic 2024',
+    read: '13 horas',
+    title: 'FUNDAMENTO DE UX Y UI MANEJO DE FIGMA',
+    excerpt: 'Curso que enseña los fundamentos de la experiencia de usuario (UX) y la interfaz de usuario (UI), incluyendo diseño centrado en el usuario y principios de usabilidad.',
+  },
+
+
 ];
 
 export const CONTACT_LINKS = [
-  { href: 'https://github.com/', label: 'GitHub', mono: false },
-  { href: 'https://www.linkedin.com/', label: 'LinkedIn', mono: false },
-  { href: 'mailto:hola@alexiscampomanes.dev', label: 'hola@alexiscampomanes.dev', mono: true },
+  { href: 'https://github.com/Alexis-Campomanes', label: 'GitHub', mono: false },
+  { href: 'https://www.linkedin.com/in/alexiscampomanes/', label: 'LinkedIn', mono: false },
+  { href: '#contacto', label: 'alexiscp.developer@gmail.com', mono: true },
 ];
 
 const C = TERM_COLORS;
@@ -264,9 +334,9 @@ export const COMMANDS: Record<string, TermLine[]> = {
     { text: 'Bajá a la sección Servicios para el detalle.', color: C.dim },
   ],
   contacto: [
-    { text: 'mail    → hola@alexiscampomanes.dev', color: C.ok },
-    { text: 'github  → github.com/alexiscampomanes', color: C.ok },
+    { text: 'mail    → alexiscp.developer@gmail.com', color: C.ok },
+    { text: 'github  → github.com/Alexis-Campomanes', color: C.ok },
     { text: 'linkedin→ /in/alexiscampomanes', color: C.ok },
   ],
-  cv: [{ text: 'CV en PDF disponible en la sección “¿Preferís el CV en PDF?”.', color: C.brand }],
+  cv: [{ text: 'CV en PDF disponible en la sección “¿Prefieres el CV en PDF?”.', color: C.brand }],
 };
